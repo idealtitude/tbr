@@ -20,4 +20,4 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/tbr"]
-package-data = { "tbr" = ["data/*"] }
+package-data = { "tbr" = ["data/*", "locales/**/*"] }

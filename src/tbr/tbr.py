@@ -1,5 +1,5 @@
 """
-tbr is a small, easy to use, and fast app to read the BIble from your terminal
+tbr is a small, easy to use, and fast app to read the Bible from your terminal
 """
 
 from typing import Any
@@ -8,6 +8,7 @@ import os
 import argparse
 import iniconfig
 import importlib.resources
+import gettext
 
 # import re
 
@@ -31,15 +32,14 @@ USER_CWD: str = os.getcwd()
 USER_HOME: str = os.path.expanduser("~")
 
 
-def get_args() -> Arguments:
+def get_args(_) -> Arguments:
     """Parsing command line arguments using subparsers"""
     parser = argparse.ArgumentParser(
-        prog=f"{__app_name__}",
-        description=f"A minimalist app for taking notes. Read the documentation to discover the features of {
-            __app_name__}",
-        epilog=f"Read the documentation to learn how to use {__app_name__}",
+        prog=__app_name__,
+        description=_("A minimalist app"),
+        epilog=_("Help") + f" {__app_name__}",
     )
-    parser.add_argument("-i", "--input", action="store_true", help="Help string")
+    parser.add_argument("-i", "--input", action="store_true", help=_("Help string"))
     parser.add_argument(
         "-v", "--version", action="version", version=f"%(prog)s {__version__}"
     )
@@ -52,22 +52,39 @@ def load_config() -> Any:
     config_path: Any = importlib.resources.files("tbr").joinpath("data/tbr.conf")
     ini: Any = iniconfig.IniConfig(config_path)
     conf: ConfigDict = {}
+    conf["app"] = {}
+    conf["app"]["lang"] = ini["app"]["lang"]
     conf["bible"] = {}
-    conf["bible"]["item"] = ini["bible"]["version"]
+    conf["bible"]["version"] = ini["bible"]["version"]
 
     return conf
 
 
+def setup_gettext(
+    package_name: str, translation_domain: str, user_language: str | None = None
+):
+    localedir_path: Any = importlib.resources.files(package_name).joinpath("locales")
+
+    try:
+        translator = gettext.translation(
+            domain=translation_domain,
+            localedir=localedir_path,
+            languages=[user_language] if user_language else None,
+            fallback=True,
+        )
+        return translator.gettext
+    except Exception as e:
+        print(f"ERROR: Failed to set up translations: {e}")
+        return gettext.gettext
+
+
 def main() -> int:
     """Main entry point"""
-    args: Arguments = get_args()
     config: Any = load_config()
-    print("Printing config:")
 
-    for k, v in config.items():
-        print(f"\n\033[1mSection\033[0m {k}:")
-        for sk, sv in v.items():
-            print(f"\t{sk}: {sv}")
+    _ = setup_gettext("tbr", "messages", config["app"]["lang"])
+
+    args: Arguments = get_args(_)
 
     if args.input:
         print("No commands implemented yet")
