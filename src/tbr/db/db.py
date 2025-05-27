@@ -34,9 +34,9 @@ class Db:
     Methods
     -------
     connect
-        Takes no parameter, return thhe `connection` attribute
+        Takes no parameter, return the `connection` attribute
     disconnect
-        this method close the connectio; called by the destructor
+        this method close the connection; called by the destructor
     db_read
         return records from the databases; essentially do `SELECT` queries
     db_write
