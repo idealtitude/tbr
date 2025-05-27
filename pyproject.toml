@@ -1,15 +1,17 @@
-[tbr]
+[project]
 name = "tbr"
 version = "0.0.1"
 description = "tbr is an app to read the BIble from your terminal"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "iniconfig>=2.1.0",
+]
 
 [dependency-groups]
 dev = []
 
-[tbr.scripts]
+[project.scripts]
 tbr = "tbr.tbr:main"
 
 [build-system]

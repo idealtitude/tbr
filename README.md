@@ -6,7 +6,7 @@
 
 ## Installation
 
-### Prequesites
+### Prerequesites
 
 ### Install
 

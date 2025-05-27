@@ -1,5 +1,5 @@
 """
-Python tbr_tmpect
+tbr is a small, easy to use, and fast app to read the BIble from your terminal
 """
 
 from typing import Any
@@ -17,7 +17,7 @@ type Arguments = argparse.Namespace
 type ConfigDict = dict[str, dict[str, str]]
 
 # Meta
-__app_name__: str = "tbr_tmp"
+__app_name__: str = "tbr"
 __author__: str = "idealtitude"
 __version__: str = "0.0.1"
 __license__: str = "MT108"
@@ -26,7 +26,7 @@ __license__: str = "MT108"
 EXIT_SUCCESS: int = 0
 EXIT_FAILURE: int = 1
 # Paths used by the app
-APP_PATH: str = os.path.dirname(os.path.realpath(__file__))
+# APP_PATH: str = os.path.dirname(os.path.realpath(__file__))
 USER_CWD: str = os.getcwd()
 USER_HOME: str = os.path.expanduser("~")
 
@@ -49,9 +49,7 @@ def get_args() -> Arguments:
 
 def load_config() -> Any:
     """Loading configuration and settings path to db"""
-    config_path: Any = importlib.resources.files("tbr_tmp").joinpath(
-        "data/tbr_tmp.conf"
-    )
+    config_path: Any = importlib.resources.files("tbr").joinpath("data/tbr.conf")
     ini: Any = iniconfig.IniConfig(config_path)
     conf: ConfigDict = {}
     conf["bible"] = {}
