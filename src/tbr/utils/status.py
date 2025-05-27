@@ -14,28 +14,29 @@ from enum import Enum
 
 
 class LogLevel(Enum):
-    """This eum class is used to determine whoch color is used for logging"""
+    """This enum class is used to determine which color is used for logging"""
 
-    OK: 0
-    ERROR: 1
-    WARNING: 2
-    INFO: 3
-    SUCCESS: 4
+    OK = 0
+    ERROR = 1
+    WARNING = 2
+    INFO = 3
+    SUCCESS = 4
+    NOTICE = 5
 
 
 class Logger:
     """This is a kind of logger object"""
 
-    def __init__(self, level: int, message: str) -> None:
+    def __init__(self, level: LogLevel = LogLevel.OK, message: str = "nil") -> None:
         """
         Instanciation of the status object
         """
-        self.status: dict[int, str] = {LogLevel.OK, "nil"}
-        self.color: dict[int, str] = {
+        self.status: dict[LogLevel, str] = [level, message]
+        self.colors: dict[int, str] = {
             0: "\033[0m",
             1: "\033[91m",
             2: "\033[33m",
-            3: "\033[34m",
+            3: "\033[94m",
             4: "\033[92m",
             5: "\03[1m",
         }
@@ -47,21 +48,21 @@ class Logger:
         output: str = ""
         match self.status[0]:
             case LogLevel.ERROR:
-                output += f"{self.colors[1]}Error{self.colors[0]} {self.status[1]}"
+                output = f"{self.colors[1]}Error:{self.colors[0]} {self.status[1]}"
             case LogLevel.WARNING:
-                output += f"{self.colors[2]}Warning{self.colors[0]} {self.status[1]}"
+                output = f"{self.colors[2]}Warning:{self.colors[0]} {self.status[1]}"
             case LogLevel.INFO:
-                output += f"{self.colors[3]}Info{self.colors[0]} {self.status[1]}"
+                output = f"{self.colors[3]}Info:{self.colors[0]} {self.status[1]}"
             case LogLevel.SUCCESS:
-                output += f"{self.colors[4]}Success{self.colors[0]} {self.status[1]}"
+                output = f"{self.colors[4]}Success:{self.colors[0]} {self.status[1]}"
             case _:
-                output += f"{self.colors[2]}Notice{self.colors[0]} {self.status[1]}"
+                output = f"{self.colors[5]}Notice:{self.colors[0]} {self.status[1]}"
 
         return output
 
-    def set_log(self, level: LogLevel, message, str) -> bool:
+    def set_log(self, level: LogLevel, message: str) -> bool:
         """
-        update the status
+        Update the status
 
             Parameters:
                 level (LogLevel)
@@ -71,11 +72,11 @@ class Logger:
             self.status[0] = level
             self.status[1] = message
             return True
-        self.status[5] = level
+        self.status[0] = LogLevel.NOTICE
         self.status[1] = "wrong LogLevel"
         return False
 
-    def get_level(sef) -> int:
+    def get_level(sef) -> LogLevel:
         """
         Return the current status level
 

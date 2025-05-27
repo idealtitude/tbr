@@ -8,7 +8,7 @@ Classes:
 
 from typing import Any
 import sqlite3
-from ..utils import LogLevel, Logger
+from ..utils.status import LogLevel, Logger
 
 
 class Db:

@@ -9,8 +9,8 @@ import argparse
 import iniconfig
 import importlib.resources
 import gettext
-
-# import re
+import re
+from .utils.status import LogLevel, Logger
 
 
 # Custom type for argparse return type
@@ -85,9 +85,11 @@ def main() -> int:
     _ = setup_gettext("tbr", "messages", config["app"]["lang"])
 
     args: Arguments = get_args(_)
+    logger: Logger = Logger()
 
     if args.input:
-        print("No commands implemented yet")
+        logger.set_log(LogLevel.WARNING, "no commands implemented yet")
+        print(logger.get_log())
 
     return EXIT_SUCCESS
 
