@@ -1,2 +1,14 @@
 # tbr
-Terminal Bible Reader, read the BIble from your terminal
+
+## Presentation
+
+**tdb** stands for Terminal Bible Reader; it's a small, easy to use, and fast app to read the BIble from your terminal.
+
+## Installation
+
+### Prequesites
+
+### Install
+
+## Usage
+
